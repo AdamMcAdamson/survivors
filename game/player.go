@@ -16,10 +16,15 @@ type PlayerObj struct {
 func (p PlayerObj) draw() {
 	var sourceRect = rl.Rectangle{X: 0, Y: 0, Width: 400, Height: 400}
 	var destRect = rl.Rectangle{X: p.Pos.X, Y: p.Pos.Y, Width: 80, Height: 80}
-	var angle = -rl.Vector2LineAngle(p.FaceDir, rl.Vector2{X: 1, Y: 0}) * 360 / rl.Pi
+	var angle = -rl.Vector2LineAngle(p.FaceDir, rl.Vector2{X: -1, Y: 0}) * 360 / rl.Pi
 	rl.DrawTexturePro(p.Texture, sourceRect, destRect, rl.Vector2{X: 25, Y: 40}, angle, rl.White)
 }
 
-// func (p PlayerObj) FireBullet(pos rl.Vector2, dir rl.Vector2, speed float32) Projectile {
-// 	Entities.Projectiles = append(p.Projectiles, Projectile{Id: len(Projectiles)})
-// }
+func (p PlayerObj) FireBullet() {
+	entities.Projectiles = append(entities.Projectiles, &Projectile{Id: entities.NextId, Pos: p.Pos, Dir: p.FaceDir, Speed: 10})
+	entities.NextId++
+}
+
+func (p *PlayerObj) updatePosition() {
+	p.Pos = rl.Vector2Add(p.Pos, rl.Vector2Scale(p.MoveDir, p.Speed))
+}

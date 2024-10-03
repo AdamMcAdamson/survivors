@@ -8,7 +8,10 @@ func draw() {
 	rl.BeginDrawing()
 	rl.ClearBackground(rl.RayWhite)
 
-	Player.draw()
+	entities.Player.draw()
+	for _, p := range entities.Projectiles {
+		p.draw()
+	}
 
 	rl.EndDrawing()
 }

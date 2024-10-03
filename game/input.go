@@ -15,6 +15,8 @@ func handleButtons() {
 	down := rl.IsKeyDown(rl.KeyS)
 	right := rl.IsKeyDown(rl.KeyD)
 
+	fire := rl.IsMouseButtonDown(rl.MouseButtonLeft)
+
 	var dirX float32 = 0.0
 	var dirY float32 = 0.0
 
@@ -34,8 +36,13 @@ func handleButtons() {
 	dir := rl.Vector2Normalize(rl.Vector2{X: dirX, Y: dirY})
 	_ = dir
 	Player.MoveDir = dir
+
+	if fire {
+		Player.FireBullet()
+	}
+
 }
 
 func handleMouse() {
-	Player.FaceDir = rl.Vector2Normalize(rl.Vector2Subtract(Player.Pos, rl.GetMousePosition()))
+	Player.FaceDir = rl.Vector2Normalize(rl.Vector2Subtract(rl.GetMousePosition(), Player.Pos))
 }
