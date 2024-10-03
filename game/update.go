@@ -1,7 +1,6 @@
 package game
 
 import (
-	s "github.com/AdamMcAdamson/survivors/state"
 	rl "github.com/gen2brain/raylib-go/raylib"
 )
 
@@ -12,5 +11,5 @@ func Update() {
 }
 
 func stepGame() {
-	s.Player.Pos = rl.Vector2Add(s.Player.Pos, rl.Vector2Scale(s.Player.MoveDir, s.Player.Speed))
+	Player.Pos = rl.Vector2Add(Player.Pos, rl.Vector2Scale(Player.MoveDir, Player.Speed))
 }
