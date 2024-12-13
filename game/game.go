@@ -5,4 +5,5 @@ type Entities struct {
 	Player      *PlayerObj
 	Projectiles []*Projectile
 	Walls       []*Wall
+	Enemies     []*Enemy
 }
