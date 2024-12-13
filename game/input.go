@@ -33,8 +33,10 @@ func handleButtons() {
 	if right {
 		dirX += 1
 	}
-	if rl.IsKeyDown(rl.KeyL) {
-		s.World.Camera.Offset.X += 5
+	if rl.IsKeyPressed(rl.KeyL) {
+		mouseWorldPos := rl.GetScreenToWorld2D(rl.GetMousePosition(), s.World.Camera)
+		var angle = -rl.Vector2LineAngle(Player.FaceDir, rl.Vector2{X: 0, Y: 1}) * 360 / rl.Pi
+		placeWall(mouseWorldPos.X, mouseWorldPos.Y, 100, 40, angle)
 	}
 	if rl.IsKeyDown(rl.KeyP) {
 		s.World.Camera.Offset.X = 0
