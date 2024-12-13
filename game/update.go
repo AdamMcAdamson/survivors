@@ -3,6 +3,7 @@ package game
 func Update() {
 	handleInput()
 	stepGame()
+	updateWorldCamera()
 	draw()
 }
 

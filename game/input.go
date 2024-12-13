@@ -1,6 +1,7 @@
 package game
 
 import (
+	s "github.com/AdamMcAdamson/survivors/state"
 	rl "github.com/gen2brain/raylib-go/raylib"
 )
 
@@ -32,6 +33,13 @@ func handleButtons() {
 	if right {
 		dirX += 1
 	}
+	if rl.IsKeyDown(rl.KeyL) {
+		s.World.Camera.Offset.X += 5
+	}
+	if rl.IsKeyDown(rl.KeyP) {
+		s.World.Camera.Offset.X = 0
+		s.World.Camera.Offset.Y = 0
+	}
 
 	dir := rl.Vector2Normalize(rl.Vector2{X: dirX, Y: dirY})
 	_ = dir
@@ -44,5 +52,9 @@ func handleButtons() {
 }
 
 func handleMouse() {
-	Player.FaceDir = rl.Vector2Normalize(rl.Vector2Subtract(rl.GetMousePosition(), Player.Pos))
+	// Player.FaceDir = rl.Vector2Normalize(rl.Vector2Subtract(rl.GetMousePosition(), Player.Pos))
+	Player.FaceDir = rl.Vector2Normalize(rl.Vector2Subtract(rl.GetScreenToWorld2D(rl.GetMousePosition(), s.World.Camera), Player.Pos))
+	// fmt.Printf("%v || %v || %v\n", s.Player.Pos, s.Player.MoveDir, s.Player.FaceDir)
+	// fmt.Println(s.Player.FaceDir)
+
 }
