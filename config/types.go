@@ -10,8 +10,6 @@ type PlayerObj struct {
 }
 
 type WorldObj struct {
-	ScreenWidth           int32
-	ScreenHeight          int32
 	PlayerViewBoundingBox rl.Rectangle
 	Camera                rl.Camera2D
 }

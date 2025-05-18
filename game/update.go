@@ -1,13 +1,16 @@
 package game
 
-import rl "github.com/gen2brain/raylib-go/raylib"
+import (
+	s "github.com/AdamMcAdamson/survivors/state"
+	rl "github.com/gen2brain/raylib-go/raylib"
+)
 
 var count = 0
 
 func Update() {
 	count++
 	conditional(count)
-	handleInput()
+	HandleInput()
 	stepGame()
 	updateWorldCamera()
 	draw()
@@ -22,11 +25,13 @@ func conditional(count int) {
 }
 
 func stepGame() {
+	Player.DoPlayerActions()
 	updatePositions()
+	s.StepCount++
 }
 
 func updatePositions() {
-	entities.Player.updatePosition()
+	// entities.Player.UpdatePosition()
 	for _, e := range entities.Enemies {
 		e.moveTowardPlayer()
 	}

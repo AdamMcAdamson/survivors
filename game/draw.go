@@ -17,6 +17,7 @@ func draw() {
 	for _, w := range entities.Walls {
 		w.draw()
 	}
+
 	for _, p := range entities.Projectiles {
 		p.draw()
 	}

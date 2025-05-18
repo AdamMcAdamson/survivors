@@ -8,9 +8,9 @@ import (
 
 func main() {
 	rl.SetConfigFlags(rl.FlagVsyncHint)
-	rl.InitWindow(s.World.ScreenWidth, s.World.ScreenHeight, "raylib [core] example - basic window")
+	rl.InitWindow(s.ScreenWidth, s.ScreenHeight, "raylib [core] example - basic window")
 
-	rl.SetTargetFPS(60)
+	rl.SetTargetFPS(s.FPS)
 	g.Init()
 	for !rl.WindowShouldClose() {
 		g.Update()

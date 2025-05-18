@@ -5,58 +5,44 @@ import (
 	rl "github.com/gen2brain/raylib-go/raylib"
 )
 
-func handleInput() {
+const (
+	Up int = iota
+	Left
+	Down
+	Right
+	Fire
+	PlaceWall
+	Pickup
+	Menu
+	Pause
+
+	// Keep last
+	UndefinedInput
+)
+
+var inputs []bool = make([]bool, UndefinedInput)
+var worldMousePos rl.Vector2
+
+func HandleInput() {
+	getInputs()
+	Player.SetPlayerActions(inputs, worldMousePos)
+}
+
+func getInputs() {
 	handleMouse()
 	handleButtons()
 }
 
 func handleButtons() {
-	up := rl.IsKeyDown(rl.KeyW)
-	left := rl.IsKeyDown(rl.KeyA)
-	down := rl.IsKeyDown(rl.KeyS)
-	right := rl.IsKeyDown(rl.KeyD)
+	inputs[Up] = rl.IsKeyDown(rl.KeyW)
+	inputs[Left] = rl.IsKeyDown(rl.KeyA)
+	inputs[Down] = rl.IsKeyDown(rl.KeyS)
+	inputs[Right] = rl.IsKeyDown(rl.KeyD)
+	inputs[PlaceWall] = rl.IsKeyDown(rl.KeyP)
 
-	fire := rl.IsMouseButtonDown(rl.MouseButtonLeft)
-
-	var dirX float32 = 0.0
-	var dirY float32 = 0.0
-
-	if up {
-		dirY -= 1
-	}
-	if left {
-		dirX -= 1
-	}
-	if down {
-		dirY += 1
-	}
-	if right {
-		dirX += 1
-	}
-	if rl.IsKeyPressed(rl.KeyL) {
-		mouseWorldPos := rl.GetScreenToWorld2D(rl.GetMousePosition(), s.World.Camera)
-		var angle = -rl.Vector2LineAngle(Player.FaceDir, rl.Vector2{X: 0, Y: 1}) * 360 / rl.Pi
-		placeWall(mouseWorldPos.X, mouseWorldPos.Y, 100, 40, angle)
-	}
-	if rl.IsKeyDown(rl.KeyP) {
-		s.World.Camera.Offset.X = 0
-		s.World.Camera.Offset.Y = 0
-	}
-
-	dir := rl.Vector2Normalize(rl.Vector2{X: dirX, Y: dirY})
-	_ = dir
-	Player.MoveDir = dir
-
-	if fire {
-		Player.FireBullet()
-	}
-
+	inputs[Fire] = rl.IsMouseButtonDown(rl.MouseButtonLeft)
 }
 
 func handleMouse() {
-	// Player.FaceDir = rl.Vector2Normalize(rl.Vector2Subtract(rl.GetMousePosition(), Player.Pos))
-	Player.FaceDir = rl.Vector2Normalize(rl.Vector2Subtract(rl.GetScreenToWorld2D(rl.GetMousePosition(), s.World.Camera), Player.Pos))
-	// fmt.Printf("%v || %v || %v\n", s.Player.Pos, s.Player.MoveDir, s.Player.FaceDir)
-	// fmt.Println(s.Player.FaceDir)
-
+	worldMousePos = rl.GetScreenToWorld2D(rl.GetMousePosition(), s.World.Camera)
 }
